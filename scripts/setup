@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+unset VIRTUAL_ENV
+
+if ! command -v uv >/dev/null 2>&1; then
+  echo "uv is required but was not found in PATH."
+  exit 1
+fi
+
+echo "[setup] syncing project dependencies"
+uv sync --dev
+
+if [[ -f "standards/skills/manifest.yaml" ]]; then
+  echo "[setup] skills registry detected at standards/skills/manifest.yaml"
+fi
+
+echo "[setup] done"

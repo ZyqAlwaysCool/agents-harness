@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[oc]
+.pytest_cache/
+.ruff_cache/
+.venv/
+
+# Artifacts
+artifacts/generated/
+logs/
+
+# Environment
+.env
+.env.*
+!.env.example

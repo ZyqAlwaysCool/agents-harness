@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "[check] running lint"
+./scripts/lint
+
+echo "[check] running tests"
+./scripts/test
+
+echo "[check] all checks passed"

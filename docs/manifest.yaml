@@ -1,0 +1,72 @@
+version: 1
+
+documents:
+  - id: docs-index
+    title: Docs Index
+    path: docs/index.md
+    type: navigation
+    status: active
+    source_of_truth: false
+
+  - id: harness-model
+    title: Harness Control Model
+    path: docs/current/architecture/harness-model.md
+    type: architecture
+    status: active
+    source_of_truth: true
+
+  - id: product-readme
+    title: Product Current Truth Guide
+    path: docs/current/product/README.md
+    type: guide
+    status: active
+    source_of_truth: true
+
+  - id: architecture-readme
+    title: Architecture Current Truth Guide
+    path: docs/current/architecture/README.md
+    type: guide
+    status: active
+    source_of_truth: true
+
+  - id: domain-readme
+    title: Domain Current Truth Guide
+    path: docs/current/domain/README.md
+    type: guide
+    status: active
+    source_of_truth: true
+
+  - id: contracts-readme
+    title: Contracts Current Truth Guide
+    path: docs/current/contracts/README.md
+    type: guide
+    status: active
+    source_of_truth: true
+
+  - id: runbooks-readme
+    title: Runbooks Current Truth Guide
+    path: docs/current/runbooks/README.md
+    type: guide
+    status: active
+    source_of_truth: true
+
+  - id: adr-guide
+    title: ADR Guide
+    path: docs/adr/README.md
+    type: guide
+    status: active
+    source_of_truth: false
+
+  - id: worklog-guide
+    title: Worklog Guide
+    path: docs/worklog/README.md
+    type: guide
+    status: active
+    source_of_truth: false
+
+  - id: archive-guide
+    title: Archive Guide
+    path: docs/archive/README.md
+    type: guide
+    status: active
+    source_of_truth: false

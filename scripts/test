@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+unset VIRTUAL_ENV
+export PYTHONPATH="${PWD}${PYTHONPATH:+:${PYTHONPATH}}"
+uv run pytest
