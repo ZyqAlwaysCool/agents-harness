@@ -2,24 +2,26 @@
 
 [English](./README.md) | [简体中文](./README.zh-CN.md)
 
-`Agent Harness` is a repository starter for agent-first software development.
+`Agent Harness` is a repository starter for agent-first software development. It does not provide complete knowledge. It provides a controlled software engineering environment so an agent can minimize interpretive drift across ongoing iterations and resist entropy in both knowledge and workflow, while still keeping the human firmly in charge of important decisions.
 
-It is built around a simple idea:
+The current v0.1 repository was assembled through GPT-5.4-assisted collaboration. Its design grows out of two sources: real problems observed in earlier agent-led vibe coding projects, and the harness engineering ideas described by OpenAI.
+
+A useful mental model is this: a model is like a high-performance engine. It only becomes reliable for semi-autonomous software delivery when it is mounted inside a structured system with clear boundaries, readable controls, and a predictable track.
+
+This template currently uses `uv + FastAPI + pytest + Ruff` as its Python-first reference stack. That stack is only the starting point; projects are expected to replace or extend Packs and Policies to fit their own needs.
 
 > Agent Harness does not provide complete knowledge. It provides a controlled track for knowledge to grow from chaos into stability.
 
-The goal is not to make the model "more creative." The goal is to make the repository readable, executable, verifiable, and correctable enough that a strong model can operate with less human micromanagement.
-
 ## Why This Exists
 
-Modern coding models are powerful engines, but raw model capability alone does not produce stable software delivery. Without structure, projects drift:
+Modern coding models are already powerful, but model capability alone does not naturally produce stable software delivery. Without structure, projects drift in familiar ways:
 
-- knowledge mixes current truth with temporary notes
+- current truth gets mixed with temporary notes
 - every new session has to rebuild context from scratch
 - verification depends on human reminders
-- high-impact changes are easy to make in the wrong way
+- high-impact changes happen in the wrong boundary
 
-Agent Harness applies harness engineering ideas to the repository itself.
+Agent Harness applies harness engineering ideas directly to the repository itself.
 
 It treats the repository as the control surface for the agent:
 
@@ -29,7 +31,7 @@ It treats the repository as the control surface for the agent:
 - verification acts as the dashboard
 - human confirmation boundaries act as the guardrails
 
-This project is directly informed by OpenAI's article on harness engineering:
+Reference:
 
 - OpenAI, "Harness engineering: using Codex in an agentic world"
   https://openai.com/zh-Hans-CN/index/harness-engineering/
@@ -42,35 +44,35 @@ The repository control model has three layers:
 - `Pack`: stack-specific implementation guidance
 - `Policy`: project-level governance switches defined in [`configs/agent-harness.yaml`](./configs/agent-harness.yaml)
 
-The current default pack is `python-fastapi`.
+The current default Pack is `python-fastapi`.
 
 ## What The Repository Provides
 
 - [`AGENTS.md`](./AGENTS.md): the startup map for the agent
-- [`docs/`](./docs): layered knowledge, with `docs/current/` as current truth
+- [`docs/`](./docs): layered knowledge, with `docs/current/` as the current truth layer
 - [`app/`](./app): the only business-code root
 - [`scripts/`](./scripts): stable entrypoints for setup, development, verification, and replay
-- [`standards/`](./standards): base and pack-level standards
-- [`configs/agent-harness.yaml`](./configs/agent-harness.yaml): project-level policy switches
-- [`standards/skills/manifest.yaml`](./standards/skills/manifest.yaml): skill declarations used by the repository control surface
+- [`standards/`](./standards): Base and Pack standards
+- [`configs/agent-harness.yaml`](./configs/agent-harness.yaml): project-level Policy switches
+- [`standards/skills/manifest.yaml`](./standards/skills/manifest.yaml): Skills declarations used by the repository control surface
 
-## How To Use It
+## How To Start
 
-### 1. Start With The Repository, Not With Code
+### 1. Adjust The Control Surface Before Business Implementation
 
-Create a new project from this template, then adapt the control surface before asking the agent to build business logic.
+After creating a new project from this template, adapt the control surface before asking the agent to implement business logic.
 
-Typical first steps:
+Typical steps:
 
 1. rename the project and update [`configs/agent-harness.yaml`](./configs/agent-harness.yaml)
 2. review [`AGENTS.md`](./AGENTS.md) and keep it as a startup map plus hard boundaries
-3. decide whether the default `python-fastapi` pack fits the project
-4. adjust policy switches, docs structure, and scripts if needed
+3. decide whether the default `python-fastapi` Pack fits the project; if not, define your own stack standard or replace the Pack
+4. adjust Policy switches, docs structure, and scripts if needed
 5. run `./scripts/setup`
 
 ### 2. First Conversation: Understand The Track, Then Discuss The Need
 
-For the very first agent session, do not start with implementation.
+For a brand-new project, the first conversation with the agent should not jump straight into implementation.
 
 A better order is:
 
@@ -80,47 +82,47 @@ A better order is:
 4. confirm the structure and the first set of current-truth docs
 5. only then move into implementation
 
-In practice, the first conversation should usually be about **repository understanding plus requirement clarification**, not coding.
+In practice, the first conversation should usually be:
+
+**repository understanding plus requirement clarification**, not coding.
 
 ### 3. Let Knowledge Grow In Layers
 
-At the beginning, the project may not have complete requirements or architecture. That is expected.
-
-Use the docs layers deliberately:
+At the beginning, requirements may be incomplete and architecture may still be unsettled. That is normal. The key is not to front-load a large amount of documentation, but to place each piece of knowledge in the right layer:
 
 - `docs/worklog/` for active discussion and temporary notes
 - `docs/current/` for confirmed current truth
 - `docs/adr/` for important decisions
 - `docs/archive/` for retired content
 
-The point is not to write a lot of docs early. The point is to make sure each piece of knowledge goes to the right layer.
+The goal is not “more docs.” The goal is to prevent different knowledge states from being mixed together.
 
-## How Developers Modify The Framework
+## How To Modify The Framework
 
-This starter is meant to be changed.
+This starter is meant to evolve.
 
 The intended customization model is:
 
-- keep `Base` stable unless you want to change the repository control philosophy
-- change `Pack` when the stack or internal code organization changes
-- change `Policy` when you want a different level of agent autonomy or review strictness
-- evolve `scripts/` implementations while keeping entrypoint names stable
+- modify `Base` to change the repository control philosophy
+- modify `Pack` to adapt the stack or code organization
+- modify `Policy` to tune agent autonomy and governance strength
+- modify `scripts/` implementations to improve execution while keeping entrypoint names stable
 
 In other words:
 
-- use `Base` to control drift
+- use `Base` to control interpretive drift
 - use `Pack` to adapt the stack
 - use `Policy` to tune governance
 
 ## Default Verification Loop
 
-The default verification entrypoint is:
+The default full verification entrypoint is:
 
 ```bash
 ./scripts/check
 ```
 
-The default development flow is:
+The default development path is:
 
 ```bash
 ./scripts/setup
@@ -128,30 +130,30 @@ The default development flow is:
 ./scripts/check
 ```
 
-The goal is that the agent should be able to complete a verification loop by default, instead of stopping after code generation.
+The goal is for the agent to complete the loop of **implement -> verify -> hand off** by default, instead of stopping at code generation.
 
-## Current Direction
+## Direction Of Iteration
 
-This repository is still an evolving framework.
+This repository is itself an evolving framework rather than a one-time static ruleset.
 
 The current plan is practical and iterative:
 
 1. apply the framework to a real new project
 2. use GPT-5.4, Claude Code, or similar agents inside this constrained environment
-3. observe where the framework helps and where it still leaks drift
+3. observe where the framework helps and where drift still leaks through
 4. refine the framework through real project experience
 5. repeat
 
-This matters because Agent Harness should not be designed only from theory. It should be shaped by actual agent behavior under real development pressure.
+This matters because Agent Harness should not be designed from abstract discussion alone. It should be shaped by actual agent behavior under real development pressure.
 
-## Near-Term Iteration Focus
+## Near-Term Focus
 
-The next improvements are expected to come from practice in real projects, especially around:
+The next improvements are expected to come from real project use, especially around:
 
-- stronger pack details
+- stronger Pack details
 - better replay and debugging affordances
-- sharper human confirmation boundaries
-- better skill declarations and integrations
+- sharper human handoff boundaries
+- clearer Skills declarations and integrations
 - clearer verification contracts for agent handoff
 
 ## Quick Start
@@ -164,4 +166,4 @@ The next improvements are expected to come from practice in real projects, espec
 
 ## Status
 
-This is a v0.1 template focused on a Python-first starting point. The repository control model is intentionally broader than Python, but the first shipped pack is `python-fastapi`.
+This is a v0.1 template with a Python-first starting point. The repository control model is intentionally broader than Python, but the first bundled Pack is `python-fastapi`, which you can replace or extend as needed.

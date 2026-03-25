@@ -2,24 +2,26 @@
 
 [English](./README.md) | [简体中文](./README.zh-CN.md)
 
-`Agent Harness` 是一个面向 agent-first 软件开发的仓库起步模板。
+`Agent Harness` 是一个面向 agent-first 软件开发的仓库初始化模板。它提供的不是完整知识，而是一套受控的软件工程环境，使 agent 在持续迭代中尽量避免理解漂移，并对抗知识与流程的熵增问题，从而在保持人类掌舵的前提下，尽可能降低人工微观干预。
 
-它围绕一个很核心的判断来设计：
+当前仓库的 v0.1 初版由 GPT-5.4 在对话协作中完成搭建。它同时吸收了两类来源：一类是作者此前在 agent 主导的 vibe coding 项目实践中暴露出的真实问题，另一类是 OpenAI 关于 harness engineering 的文章思想。
+
+一个直观的理解方式是：模型像一台高性能发动机。只有当它被安装在结构完整、边界清晰、轨道明确的工程系统中时，自动驾驶式的协作开发才真正具备稳定性。
+
+当前模板以 `uv + FastAPI + pytest + Ruff` 作为 Python-first 示例栈，你可以基于项目需求替换或扩展对应的 Pack 与 Policy。
 
 > Agent Harness 提供的不是完整知识，而是知识从混沌生长到稳定的受控轨道。
 
-它的目标不是让模型“更自由发挥”，而是让仓库本身足够可读、可执行、可验证、可纠偏，从而让一个强模型在更少人工微操的前提下稳定工作。
-
 ## 为什么要做这个
 
-现代编码模型已经是非常强的引擎，但只有模型能力本身，并不能自然导向稳定的软件交付。没有结构约束时，项目很容易漂移：
+现代编码模型已经非常强大，但模型能力本身并不会自然导向稳定的软件交付。缺少结构约束时，项目很容易出现这些问题：
 
-- 当前真相和临时记录混在一起
+- 当前真相与临时记录混杂在一起
 - 每次新会话都要重新建立上下文
 - 验证依赖人工反复提醒
-- 高影响改动容易在错误边界内发生
+- 高影响改动容易发生在错误边界内
 
-Agent Harness 的目标，就是把 harness engineering 的思想落实到仓库本身。
+Agent Harness 的目标，就是把 harness engineering 的思想真正落实到代码仓库中。
 
 它把仓库视为 agent 的控制面：
 
@@ -29,7 +31,7 @@ Agent Harness 的目标，就是把 harness engineering 的思想落实到仓库
 - 验证闭环是仪表盘
 - 人工确认边界是护栏
 
-这个项目的设计直接参考了 OpenAI 关于 harness engineering 的文章：
+参考文章：
 
 - OpenAI，《Harness engineering: using Codex in an agentic world》
   https://openai.com/zh-Hans-CN/index/harness-engineering/
@@ -42,30 +44,30 @@ Agent Harness 的目标，就是把 harness engineering 的思想落实到仓库
 - `Pack`：与技术栈相关的实现指导层
 - `Policy`：定义在 [`configs/agent-harness.yaml`](./configs/agent-harness.yaml) 中的项目治理开关
 
-当前默认的 pack 是 `python-fastapi`。
+当前默认的 Pack 是 `python-fastapi`。
 
 ## 仓库提供了什么
 
 - [`AGENTS.md`](./AGENTS.md)：agent 的启动地图
-- [`docs/`](./docs)：分层知识系统，其中 `docs/current/` 是当前真相层
+- [`docs/`](./docs)：分层知识系统，其中 `docs/current/` 是当前事实真相层
 - [`app/`](./app)：唯一业务代码根目录
 - [`scripts/`](./scripts)：稳定的 setup、开发、验证、replay 入口
 - [`standards/`](./standards)：Base 与 Pack 层标准
-- [`configs/agent-harness.yaml`](./configs/agent-harness.yaml)：项目级 policy 开关
-- [`standards/skills/manifest.yaml`](./standards/skills/manifest.yaml)：仓库控制面使用的 skills 声明
+- [`configs/agent-harness.yaml`](./configs/agent-harness.yaml)：项目级 Policy 开关
+- [`standards/skills/manifest.yaml`](./standards/skills/manifest.yaml)：仓库控制面使用的 Skills 声明
 
-## 开发者如何使用
+## 如何开始使用
 
-### 1. 先调整仓库控制面，不要一上来就写业务代码
+### 1. 先调整控制面，再进入业务实现
 
-你应该先基于模板创建新项目，再去调整控制面，而不是立即让 agent 编码业务逻辑。
+基于模板创建新项目后，建议先调整控制面，而不是立即让 agent 写业务代码。
 
-典型步骤是：
+典型步骤：
 
 1. 重命名项目，并修改 [`configs/agent-harness.yaml`](./configs/agent-harness.yaml)
 2. 阅读并调整 [`AGENTS.md`](./AGENTS.md)，让它保持“启动地图 + 硬边界”的角色
-3. 判断默认的 `python-fastapi` pack 是否适合当前项目
-4. 根据需要调整 policy、文档结构和脚本
+3. 判断默认的 `python-fastapi` Pack 是否适合当前项目；若不适合，则定义自己的技术栈规范或替换相应 Pack
+4. 根据需要调整 Policy、文档结构和脚本
 5. 运行 `./scripts/setup`
 
 ### 2. 第一次对话：先理解轨道，再讨论需求
@@ -80,15 +82,13 @@ Agent Harness 的目标，就是把 harness engineering 的思想落实到仓库
 4. 由开发者确认结构和第一批 current truth 文档
 5. 然后再进入实现
 
-也就是说，第一次对话通常应该是：
+第一次对话通常应该是：
 
 **仓库理解 + 需求澄清**，而不是直接写代码。
 
-### 3. 让知识分层生长，而不是一开始就写满文档
+### 3. 让知识分层生长
 
-项目初期需求不完整、架构未定型是正常状态。
-
-这时关键不是把文档写很多，而是把知识放到正确层级：
+项目初期需求不完整、架构未定型是正常状态。关键不是一开始把文档写满，而是把知识放到正确层级：
 
 - `docs/worklog/`：活跃讨论与临时记录
 - `docs/current/`：已确认的当前真相
@@ -97,20 +97,20 @@ Agent Harness 的目标，就是把 harness engineering 的思想落实到仓库
 
 重点不是“多写文档”，而是“不要把不同状态的知识混在一起”。
 
-## 开发者该如何修改这个框架
+## 如何修改这个框架
 
 这个模板本来就是允许被修改和演进的。
 
 推荐的修改方式是：
 
-- 如果你想改变仓库控制哲学，修改 `Base`
-- 如果你想适配新的技术栈或代码组织方式，修改 `Pack`
-- 如果你想调整 agent 自主程度或治理强度，修改 `Policy`
-- 如果你想增强执行方式，可以修改 `scripts/` 的实现，但尽量保持入口名稳定
+- 修改 `Base`：调整仓库控制哲学
+- 修改 `Pack`：适配新的技术栈或代码组织方式
+- 修改 `Policy`：调整 agent 自主程度和治理强度
+- 修改 `scripts/` 实现：增强执行方式，但尽量保持入口名稳定
 
 也就是：
 
-- 用 `Base` 控制漂移
+- 用 `Base` 控制理解漂移
 - 用 `Pack` 适配技术栈
 - 用 `Policy` 调整治理方式
 
@@ -132,7 +132,7 @@ Agent Harness 的目标，就是把 harness engineering 的思想落实到仓库
 
 目标是让 agent 默认能够完成“实现 -> 验证 -> 交付”的闭环，而不是停留在代码生成阶段。
 
-## 当前的演进方向
+## 演进方向
 
 这个仓库本身就是一个持续迭代的框架，而不是一次性定型的规范包。
 
@@ -144,16 +144,16 @@ Agent Harness 的目标，就是把 harness engineering 的思想落实到仓库
 4. 基于真实使用体验继续优化框架
 5. 持续循环
 
-这一点很重要，因为 Agent Harness 不应该只靠抽象讨论来设计，它必须经受真实项目迭代压力下的检验。
+这很重要，因为 Agent Harness 不应该只靠抽象讨论来设计，它必须经受真实项目迭代压力下的检验。
 
-## 近期迭代重点
+## 近期重点
 
 后续的优化大概率会来自真实项目实践，尤其包括：
 
-- 更完整的 pack 细则
+- 更完整的 Pack 细则
 - 更好的 replay 与调试能力
 - 更锋利的人类接管边界
-- 更清晰的 skill 声明与集成方式
+- 更清晰的 Skills 声明与集成方式
 - 更稳定的 agent 交付验证契约
 
 ## 快速开始
@@ -166,4 +166,4 @@ Agent Harness 的目标，就是把 harness engineering 的思想落实到仓库
 
 ## 当前状态
 
-当前版本是一个 v0.1 的 Python-first 起点。它的仓库控制模型并不与 Python 强绑定，但第一版内置的默认 pack 是 `python-fastapi`。
+当前版本是一个 v0.1 的 Python-first 起点。它的仓库控制模型并不与 Python 强绑定，但第一版内置的默认 Pack 是 `python-fastapi`，你可以参考该示例继续替换或扩展。
