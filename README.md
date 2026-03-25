@@ -97,6 +97,48 @@ At the beginning, requirements may be incomplete and architecture may still be u
 
 The goal is not “more docs.” The goal is to prevent different knowledge states from being mixed together.
 
+## Standard Workflow: Bootstrap First, Delivery Second
+
+A new project should usually start in two stages.
+
+### Stage A: Bootstrap Session
+
+The first session should not jump straight into business implementation. Its purpose is to turn the generic template into a controlled template for the current project.
+
+In this stage, the agent mainly does the following:
+
+- discuss requirements, scope, and constraints with you
+- populate the initial content in `docs/worklog/`, `docs/current/`, and `docs/adr/`
+- replace the default Pack with the stack Pack that the project actually needs
+- adapt `scripts/` to the project's real execution and verification flow
+- adjust Policy where needed
+- propose the internal `app/` structure when it is still undecided, then wait for confirmation
+
+When this stage is complete, the repository is no longer a generic template. It becomes a controlled environment already switched to the current project's track.
+
+### Stage B: Delivery Session
+
+The second session is where formal delivery work should begin.
+
+At that point, the new agent session is no longer facing an abstract template. It is working inside a project repository that already makes the following explicit:
+
+- where current truth lives
+- which Pack is active
+- what the current Policy is
+- what the verification entrypoints are
+- what the code-structure boundaries are
+
+Starting implementation, testing, and handoff from that state is significantly more stable.
+
+### Why Two Stages
+
+Because “building the control surface” and “delivering inside that control surface” are not the same kind of work.
+
+- the first stage lays the track, defines boundaries, and solidifies truth
+- the second stage delivers work inside the established track
+
+Bootstrap first, then start a fresh delivery session. That is the standard usage model recommended by Agent Harness.
+
 ## How To Modify The Framework
 
 This starter is meant to evolve.
